@@ -39,3 +39,20 @@ test('changing pane width preserves the exact same connected architecture canvas
     previous = rows;
   }
 });
+
+test('advanced showcase renders all eight valid diagrams and rejects its intentional failure', async () => {
+  const blocks = findMermaidBlocks(await readFile(new URL('../examples/advanced.md', import.meta.url), 'utf8'));
+  assert.equal(blocks.length, 9);
+  for (const [index, block] of blocks.slice(0, -1).entries()) {
+    const { stdout } = await promisify(execFile)(process.execPath, [
+      resolve('dist/mermaid-renderer/runner.cjs'), JSON.stringify({source: block.source, width: 120}),
+    ], { timeout: 6000 });
+    const rows = JSON.parse(stdout);
+    assert(rows.length > 0 && rows.length <= 512, `advanced diagram ${index + 1}`);
+    assert(rows.every((row: string) => row.length <= 1024), `advanced diagram ${index + 1} width`);
+    assert(rows.some((row: string) => row.trim()), `advanced diagram ${index + 1} content`);
+  }
+  await assert.rejects(promisify(execFile)(process.execPath, [
+    resolve('dist/mermaid-renderer/runner.cjs'), JSON.stringify({source: blocks.at(-1)!.source, width: 120}),
+  ], { timeout: 6000 }), /GLYPH_MERMAID_UNSUPPORTED/);
+});

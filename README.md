@@ -46,6 +46,11 @@ runtime**; rendering requires no package installation or network access.
    Toggle it again to return to source and edit diagrams. Updates are rendered
    asynchronously after source edits.
 
+For broader coverage, open [examples/advanced.md](examples/advanced.md): eight
+diagrams exercise grouped services, deployment recovery, state cycles, sequences,
+class and ER relationships, reverse layouts, and node shapes, followed by an
+intentional failure to check source fallback and ordinary Markdown formatting.
+
 For a temporary development session, first install the companion renderer as above,
 disable the bundled plugin, open the saved
 `dist/markdown_compose_extended.js` file in Fresh, and run **Load Plugin from

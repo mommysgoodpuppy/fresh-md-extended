@@ -1,8 +1,8 @@
 # Mermaid preview smoke test
 
-Use Markdown Rendered or Dual mode. Text before and after each diagram should
+Use **Markdown: Toggle Compose/Preview**. Text before and after each diagram should
 remain visible. Editing a label in the source pane should update the diagram.
-
+For a larger showcase, open [the advanced example](advanced.md).
 ## Flowchart
 
 ```mermaid
