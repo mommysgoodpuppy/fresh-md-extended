@@ -1,0 +1,12 @@
+import { readFileSync } from 'node:fs';
+import { findMermaidBlocks } from '../src/lib/mermaid.ts';
+import { renderConnectedGraph } from '../src/lib/connected-graph.ts';
+import { glyphGraphFromMermaid } from '@glyphcss/diagrams';
+const source = findMermaidBlocks(readFileSync('tests/fixtures/architecture.md','utf8'))[0].source;
+const graph = glyphGraphFromMermaid(source);
+const {layout,routing} = await renderConnectedGraph(source);
+console.log('Source order:', graph.nodes.map(n=>n.id));
+console.log('Placed:', layout.nodes.map(n=>({id:n.id,x:n.x0,y:n.y0,w:n.width,h:n.height})).sort((a,b)=>a.y-b.y||a.x-b.x));
+const route = routing.routes.find(r=>r.edge.from==='WEBXR'&&r.edge.to==='DOH');
+console.log('WEBXR->DOH:',{length:route.cells.length-1,points:route.cells.filter((p,i,a)=>!i||i===a.length-1||a[i-1].x===p.x&&a[i+1].y===p.y||a[i-1].y===p.y&&a[i+1].x===p.x)});
+console.log('Dimensions:',layout.width,layout.height);

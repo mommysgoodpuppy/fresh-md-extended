@@ -1,0 +1,21 @@
+{
+  "name": "fresh-md-extended",
+  "version": "0.2.2",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0",
+  "engines": { "node": ">=22.18.0" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@glyphcss/diagrams": "0.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "quickjs-emscripten": "0.31.0",
+    "typescript": "5.9.3"
+  }
+}
